@@ -9,6 +9,12 @@ else{
 	oranges = parseInt(localStorage.getItem("oranges"));
 }
 
+if (localStorage.getItem("dismissed") === null) {
+	
+}
+else{
+	dismissText();
+}
 
 var clickPower = 1
 
@@ -31,4 +37,5 @@ function upgradeClickPower(upgradeAmount) {
 function dismissText() {
 	var storeEl = document.getElementById("storageNote");
 	storeEl.style.visibility = "hidden";
+	localStorage.setItem("dismissed", true);
 }
