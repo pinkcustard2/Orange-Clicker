@@ -1,5 +1,15 @@
 var orangeTotalEl = document.getElementById("Oranges");
 //localStorage.removeItem("oranges");
+//localStorage.removeItem("clickPower");
+//localStorage.removeItem("upgrades");
+
+
+if (localStorage.getItem("orangesPerSec") === null) {
+	var orangesPerSec = 0; 
+}
+else{
+	var orangesPerSec = parseInt(localStorage.getItem("orangesPerSec"));
+}
 
 if (localStorage.getItem("oranges") === null) {
 	var oranges = 0; //The number of oranges the player has
@@ -22,37 +32,34 @@ else{
 	var clickPower = parseInt(localStorage.getItem("clickPower"));
 }
 
-if (localStorage.getItem("upgrades") === null) {
-	var upgrades = 0;
-}
-else{
-	var upgrades = parseInt(localStorage.getItem("upgrades"));
-}
-
-if(upgrades >= 1) {
+if(clickPower >= 2) {
 	hide("upgrade1");
 }
 
-orangeTotalEl.innerHTML = "Oranges: " + oranges;
+if (clickPower >= 4){
+	hide("upgrade2");
+}
+
+if (clickPower >= 6){
+	hide("upgrade3");
+}
+
+updateDisplay();
 
 //orangeClicked();
 
 function orangeClicked() {
 	oranges+=clickPower;
-	orangeTotalEl.innerHTML = "Oranges: " + oranges;
-	localStorage.setItem("oranges", oranges);
+	updateDisplay();
 }
 
 function upgradeClickPower(upgradeAmount, price, elementId) {
 	if (oranges >= price){
 		clickPower+=upgradeAmount;
 		oranges-= price;
-		orangeTotalEl.innerHTML = "Oranges: " + oranges;
-		localStorage.setItem("oranges", oranges);
+		updateDisplay();
 		localStorage.setItem("clickPower", clickPower);
 		hide(elementId);
-		upgrades++;
-		localStorage.setItem("upgrades", upgrades);
 	}
 	else {
 		alert("You do not have enough oranges. You need " + (price - oranges) + " more oranges to buy this.");
@@ -69,5 +76,18 @@ function hide(elementId){
 	var El = document.getElementById(elementId);
 	El.style.visibility = "hidden";
 }
+
+function harvestOranges(){
+	oranges+= orangesPerSec;
+	updateDisplay();
+}
+
+function updateDisplay(){
+	orangeTotalEl.innerHTML = "Oranges: " + oranges;
+	localStorage.setItem("oranges", oranges);
+	document.title = "Oranges: " + oranges;
+}
+
+setInterval(harvestOranges,1000);
 
 
