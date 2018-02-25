@@ -44,6 +44,13 @@ if (clickPower >= 6){
 	hide("upgrade3");
 }
 
+if (clickPower >= 10){
+	hide("upgrade4");
+}
+if (clickPower >= 15){
+	hide("upgrade5");
+}
+
 updateDisplay();
 
 //orangeClicked();
@@ -53,8 +60,8 @@ function orangeClicked() {
 	updateDisplay();
 }
 
-function upgradeClickPower(upgradeAmount, price, elementId) {
-	if (oranges >= price){
+function upgradeClickPower(upgradeAmount, price, elementId, requiredClickPower) {
+	if (oranges >= price && clickPower >= requiredClickPower){
 		clickPower+=upgradeAmount;
 		oranges-= price;
 		updateDisplay();
@@ -62,7 +69,12 @@ function upgradeClickPower(upgradeAmount, price, elementId) {
 		hide(elementId);
 	}
 	else {
-		alert("You do not have enough oranges. You need " + (price - oranges) + " more oranges to buy this.");
+		if (clickPower < requiredClickPower){
+			alert("You must buy the previous upgrades first.");
+		}
+		else if (oranges < price){
+			alert("You do not have enough oranges. You need " + (price - oranges) + " more oranges to buy this.");
+		}
 	}
 	
 }
