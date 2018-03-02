@@ -1,14 +1,18 @@
 var orangeTotalEl = document.getElementById("Oranges");
+var clickPowerEl = document.getElementById("ClickPower");
+var OPSEl = document.getElementById("OPS");
 //localStorage.removeItem("oranges");
 //localStorage.removeItem("clickPower");
 //localStorage.removeItem("upgrades");
 
 
-if (localStorage.getItem("orangesPerSec") === null) {
-	var orangesPerSec = 0; 
+
+
+if (localStorage.getItem("OPS") === null) {
+	var OPS = 0; 
 }
 else{
-	var orangesPerSec = parseInt(localStorage.getItem("orangesPerSec"));
+	var OPS = parseInt(localStorage.getItem("OPS"));
 }
 
 if (localStorage.getItem("oranges") === null) {
@@ -51,22 +55,27 @@ if (clickPower >= 15){
 	hide("upgrade5");
 }
 
-updateDisplay();
+updateOranges();
+
+updateClickPower();
+
+updateOPS();
 
 //orangeClicked();
 
 function orangeClicked() {
 	oranges+=clickPower;
-	updateDisplay();
+	updateOranges();
 }
 
 function upgradeClickPower(upgradeAmount, price, elementId, requiredClickPower) {
 	if (oranges >= price && clickPower >= requiredClickPower){
 		clickPower+=upgradeAmount;
 		oranges-= price;
-		updateDisplay();
+		updateOranges();
 		localStorage.setItem("clickPower", clickPower);
 		hide(elementId);
+		updateClickPower();
 	}
 	else {
 		if (clickPower < requiredClickPower){
@@ -90,14 +99,22 @@ function hide(elementId){
 }
 
 function harvestOranges(){
-	oranges+= orangesPerSec;
-	updateDisplay();
+	oranges+= OPS;
+	updateOranges();
 }
 
-function updateDisplay(){
+function updateOranges(){
 	orangeTotalEl.innerHTML = "Oranges: " + oranges;
 	localStorage.setItem("oranges", oranges);
 	document.title = "Oranges: " + oranges;
+}
+
+function updateClickPower(){
+	clickPowerEl.innerHTML = "Click Power: " + clickPower;
+}
+
+function updateOPS(){
+	OPSEl.innerHTML = "Oranges Per Second: " + OPS;
 }
 
 setInterval(harvestOranges,1000);
