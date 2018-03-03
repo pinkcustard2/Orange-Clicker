@@ -13,6 +13,7 @@ var OPSEl = document.getElementById("OPS");
 
 
 
+		localStorage.removeItem("dismissed");
 
 
 if (localStorage.getItem("OPS") === null) {
@@ -165,6 +166,7 @@ function updateOPS(){
 }
 
 function resetProgress(){
+	alert("hi");
 	if (confirm("Are you sure you want to reset. This cannot be undone.")) {
 		localStorage.removeItem("oranges");
 		localStorage.removeItem("clickPower");
