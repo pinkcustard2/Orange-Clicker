@@ -13,7 +13,7 @@ var OPSEl = document.getElementById("OPS");
 
 
 
-		localStorage.removeItem("dismissed");
+//localStorage.removeItem("dismissed");
 
 
 if (localStorage.getItem("OPS") === null) {
@@ -130,7 +130,7 @@ function updateOranges(){
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
 		alert("You got the achievement 'Getting Started'. View the achievements menu to see all the other achievements.");
 	}
-	if (clickPower >= 1 && achievementsEarned[2] == false){
+	if (clickPower > 1 && achievementsEarned[2] == false){
 		achievementsEarned[2] = true;
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
 		alert("You got the achievement 'Getting An Upgrade'. Collect more oranges or buy more upgrades to receive more achievements.");
@@ -166,7 +166,6 @@ function updateOPS(){
 }
 
 function resetProgress(){
-	alert("hi");
 	if (confirm("Are you sure you want to reset. This cannot be undone.")) {
 		localStorage.removeItem("oranges");
 		localStorage.removeItem("clickPower");
