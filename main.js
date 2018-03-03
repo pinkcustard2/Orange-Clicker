@@ -17,10 +17,10 @@ var OPSEl = document.getElementById("OPS");
 
 
 if (localStorage.getItem("OPS") === null) {
-	var OPS = 0; 
+	var OPS = 0;
 }
 else{
-	var OPS = parseInt(localStorage.getItem("OPS"));
+	var OPS = parseInt(localStorage.getItem("OPS")) / 10;
 }
 
 if (localStorage.getItem("oranges") === null) {
@@ -106,6 +106,25 @@ function upgradeClickPower(upgradeAmount, price, elementId, requiredClickPower) 
 	
 }
 
+function upgradeOPS(upgradeAmount, basePrice, requiredOPS) {
+	if (oranges >= (basePrice * OPS) && OPS >= requiredOPS){
+		oranges-=(basePrice * OPS);
+		updateOranges();
+		OPS+=upgradeAmount;
+		localStorage.setItem("OPS", OPS * 10);
+		updateOPS();
+	}
+	else {
+		if (OPS < requiredOPS){
+			alert("You need " + (requiredOPS - OPS) + " more oranges per second to buy this.");
+		}
+		else if (oranges < (basePrice * OPS)){
+			alert("You do not have enough oranges. You need " + ((basePrice * OPS) - oranges) + " more oranges to buy this.");
+		}
+	}
+	
+}
+
 function dismissText() {
 	hide("storageNote");
 	localStorage.setItem("dismissed", true);
@@ -118,6 +137,7 @@ function hide(elementId){
 
 function harvestOranges(){
 	oranges+=OPS;
+	oranges = Math.round(oranges * 10) / 10;
 	updateOranges();
 }
 
@@ -162,7 +182,8 @@ function updateClickPower(){
 }
 
 function updateOPS(){
-	OPSEl.innerHTML = "Oranges Per Second: " + OPS;
+	OPSEl.innerHTML = "Oranges Per Second: " + Math.round(OPS * 10) / 10;
+	document.getElementById("building1").innerHTML = "+0.1 Oranges Per Second (cost: " + (Math.round(250 * OPS *10)/10) + " oranges)";
 }
 
 function resetProgress(){
