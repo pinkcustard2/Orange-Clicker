@@ -1,25 +1,16 @@
 var orangeTotalEl = document.getElementById("Oranges");
 var clickPowerEl = document.getElementById("ClickPower");
 var OPSEl = document.getElementById("OPS");
-var news = [
-	"This update added news",
-	"The game is in version 0.4.3",
+/*var news = [
 	"You enjoy making oranges but nobody likes them",
 	"You have discovered a new way to make oranges quicker",
 	"Your family enjoys your oranges",
 	"Your road enjoys your oranges",
 	"Your town enjoys your oranges",
 	"Scientists wonder how you produce oranges so quickly",
-];
+];*/
 
-var newsRequirements = [
-	
-]
 
-//localStorage.removeItem("oranges");
-//localStorage.removeItem("clickPower");
-//localStorage.removeItem("upgrades");
-//localStorage.removeItem("achievementsEarned");
 
 
 
@@ -172,6 +163,17 @@ function updateClickPower(){
 function updateOPS(){
 	OPSEl.innerHTML = "Oranges Per Second: " + OPS;
 }
+
+function resetProgress(){
+	if (confirm("Are you sure you want to reset. This cannot be undone.")) {
+		localStorage.removeItem("oranges");
+		localStorage.removeItem("clickPower");
+		localStorage.removeItem("OPS");
+		localStorage.removeItem("achievementsEarned");
+		location.reload();
+	}
+}
+
 
 setInterval(harvestOranges,1000);
 
