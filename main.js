@@ -54,18 +54,28 @@ else{
 	var achievementsEarned = JSON.parse(localStorage.getItem("achievementsEarned"));
 }
 
+var date = new Date().getDate();
+
+if (localStorage.getItem("lastLoggedOn") === null) {
+	localStorage.setItem("lastLoggedOn", date);
+}
+else if (localStorage.getItem("lastLoggedOn") != date) {
+	oranges += OPS * 100;
+	oranges += clickPower * 50;
+	alert("Welcome back! You earnt " + (OPS * 100 + clickPower * 50) + " oranges as a daily reward.");
+	updateOranges();
+	localStorage.setItem("lastLoggedOn", date);
+}
+
 if(clickPower >= 2) {
 	hide("upgrade1");
 }
-
 if (clickPower >= 4){
 	hide("upgrade2");
 }
-
 if (clickPower >= 6){
 	hide("upgrade3");
 }
-
 if (clickPower >= 10){
 	hide("upgrade4");
 }
