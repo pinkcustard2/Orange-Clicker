@@ -41,3 +41,15 @@ if (achievementsEarned[5] == true){
 if (achievementsEarned[6] == true){
 	achievementsUpdate("achievement6");
 }
+
+if (achievementsEarned[7] == true){
+	achievementsUpdate("achievement7");
+}
+
+if (achievementsEarned[8] == true){
+	achievementsUpdate("achievement8");
+}
+
+if (achievementsEarned[9] == true){
+	achievementsUpdate("achievement9");
+}

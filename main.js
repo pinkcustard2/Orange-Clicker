@@ -150,11 +150,7 @@ function updateOranges(){
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
 		alert("You got the achievement 'Getting Started'. View the achievements menu to see all the other achievements.");
 	}
-	if (clickPower > 1 && achievementsEarned[2] == false){
-		achievementsEarned[2] = true;
-		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
-		alert("You got the achievement 'Getting An Upgrade'. Collect more oranges or buy more upgrades to receive more achievements.");
-	}
+	
 	if (oranges >= 250 && achievementsEarned[3] == false){
 		achievementsEarned[3] = true;
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
@@ -170,20 +166,43 @@ function updateOranges(){
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
 		alert("You got the achievement 'A Ton Of Oranges'.");
 	}
+	
+}
+
+function updateClickPower(){
+	clickPowerEl.innerHTML = "Click Power: " + clickPower;
 	if (clickPower >= 15 && achievementsEarned[6] == false){
 		achievementsEarned[6] = true;
 		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
 		alert("You got the achievement 'Scientists Are Interested'.");
 	}
-}
-
-function updateClickPower(){
-	clickPowerEl.innerHTML = "Click Power: " + clickPower;
+	if (clickPower > 1 && achievementsEarned[2] == false){
+		achievementsEarned[2] = true;
+		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
+		alert("You got the achievement 'Getting An Upgrade'. Collect more oranges or buy more upgrades to receive more achievements.");
+	}
 }
 
 function updateOPS(){
 	OPSEl.innerHTML = "Oranges Per Second: " + Math.round(OPS * 10) / 10;
 	document.getElementById("building1").innerHTML = "+0.1 Oranges Per Second (cost: " + (Math.round(250 * OPS *10)/10) + " oranges)";
+	document.getElementById("building2").innerHTML = "+0.5 Oranges Per Second (cost: " + (Math.round(1000 * OPS *10)/10) + " oranges)";
+	document.getElementById("building3").innerHTML = "+2 Oranges Per Second (cost: " + (Math.round(2000 * OPS *10)/10) + " oranges)";
+	if (OPS >= 0.1 && achievementsEarned[7] == false){
+		achievementsEarned[7] = true;
+		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
+		alert("You got the achievement 'Builder'.");
+	}
+	if (OPS >= 1 && achievementsEarned[8] == false){
+		achievementsEarned[8] = true;
+		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
+		alert("You got the achievement 'Super Builder'.");
+	}
+	if (OPS >= 3 && achievementsEarned[9] == false){
+		achievementsEarned[9] = true;
+		localStorage.setItem("achievementsEarned", JSON.stringify(achievementsEarned));
+		alert("You got the achievement 'Ultra Builder'.");
+	}
 }
 
 function resetProgress(){
