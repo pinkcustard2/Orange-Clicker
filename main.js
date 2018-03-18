@@ -11,7 +11,7 @@ var OPSEl = document.getElementById("OPS");
 ];*/
 
 
-
+//you can't change any local data other than oranges from other documents, until their update functions are changed
 
 //localStorage.removeItem("dismissed");
 
@@ -21,13 +21,6 @@ if (localStorage.getItem("OPS") === null) {
 }
 else{
 	var OPS = parseInt(localStorage.getItem("OPS")) / 10;
-}
-
-if (localStorage.getItem("oranges") === null) {
-	var oranges = 0; //The number of oranges the player has
-}
-else{
-	var oranges = parseInt(localStorage.getItem("oranges"));
 }
 
 if (localStorage.getItem("dismissed") === null) {
@@ -60,10 +53,8 @@ if (localStorage.getItem("lastLoggedOn") === null) {
 	localStorage.setItem("lastLoggedOn", date);
 }
 else if (localStorage.getItem("lastLoggedOn") != date) {
-	oranges += OPS * 100;
-	oranges += clickPower * 50;
 	alert("Welcome back! You earnt " + (OPS * 100 + clickPower * 50) + " oranges as a daily reward.");
-	updateOranges();
+	updateOranges(OPS * 100 + clickPower * 50);
 	localStorage.setItem("lastLoggedOn", date);
 }
 
@@ -83,7 +74,9 @@ if (clickPower >= 15){
 	hide("upgrade5");
 }
 
-updateOranges();
+var oranges = 0;
+
+updateOranges(0);
 
 updateClickPower();
 
@@ -92,15 +85,13 @@ updateOPS();
 //orangeClicked();
 
 function orangeClicked() {
-	oranges+=clickPower;
-	updateOranges();
+	updateOranges(clickPower);
 }
 
 function upgradeClickPower(upgradeAmount, price, elementId, requiredClickPower) {
 	if (oranges >= price && clickPower >= requiredClickPower){
 		clickPower+=upgradeAmount;
-		oranges-= price;
-		updateOranges();
+		updateOranges(-price);
 		localStorage.setItem("clickPower", clickPower);
 		hide(elementId);
 		updateClickPower();
@@ -118,8 +109,7 @@ function upgradeClickPower(upgradeAmount, price, elementId, requiredClickPower) 
 
 function upgradeOPS(upgradeAmount, basePrice, requiredOPS) {
 	if (oranges >= (basePrice * OPS) && OPS >= requiredOPS){
-		oranges-=(basePrice * OPS);
-		updateOranges();
+		updateOranges(-basePrice * OPS);
 		OPS+=upgradeAmount;
 		localStorage.setItem("OPS", OPS * 10);
 		updateOPS();
@@ -146,14 +136,21 @@ function hide(elementId){
 }
 
 function harvestOranges(){
-	oranges+=OPS;
-	oranges = Math.round(oranges * 10) / 10;
-	updateOranges();
+	updateOranges(OPS);
 }
 
-function updateOranges(){
-	orangeTotalEl.innerHTML = "Oranges: " + oranges;
+function updateOranges(changeBy){
+	if (localStorage.getItem("oranges") === null) {
+		oranges = 0; //The number of oranges the player has
+		localStorage.setItem("oranges", oranges);
+	}
+	else{
+		oranges = parseInt(localStorage.getItem("oranges"));
+	}
+	oranges += changeBy;
+	oranges = Math.round(oranges * 10) / 10;
 	localStorage.setItem("oranges", oranges);
+	orangeTotalEl.innerHTML = "Oranges: " + oranges;
 	document.title = "Oranges: " + oranges;
 	if (oranges >= 1 && achievementsEarned[1] == false){
 		achievementsEarned[1] = true;
